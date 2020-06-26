@@ -13,7 +13,7 @@ set whichwrap=b,s,<,>,[,],h,l
 set backspace=2
 set clipboard+=unnamed
 set backspace=indent,eol,start
-let mapleader=' '
+set lazyredraw
 
 "coding"
 set encoding=utf-8
@@ -33,12 +33,15 @@ set shiftwidth=4
 au filetype python,java,vim set tabstop=4
 au filetype python,java,vim set softtabstop=4
 au filetype python,java,vim set shiftwidth=4
-au filetype json set tabstop=2
-au filetype json set softtabstop=2
-au filetype json set shiftwidth=2
+au filetype json,markdown set tabstop=2
+au filetype json,markdown set softtabstop=2
+au filetype json,markdown set shiftwidth=2
 
 " appearance
-colorscheme github
+if has('termguicolors')
+  set termguicolors
+endif
+set background=light
 syntax on
 autocmd bufread,bufnewfile *.c,*.h,*.cpp,*.java,*.py set expandtab
 set splitright

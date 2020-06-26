@@ -1,9 +1,4 @@
 " key map
-nnoremap <c-j> <c-w><c-j>
-nnoremap <c-k> <c-w><c-k>
-nnoremap <c-l> <c-w><c-l>
-nnoremap <c-h> <c-w><c-h>
-
 inoremap <m-j> <down>
 inoremap <m-k> <up>
 inoremap <m-h> <left>
@@ -15,11 +10,9 @@ nnoremap <m-h> :vertical resize -1<cr>
 nnoremap <m-l> :vertical resize +1<cr>
 
 nnoremap <c-a> ggVG
-vnoremap <c-c> "+y
-inoremap <c-v> <Esc>"+pa
+vnoremap <C-c> "+y
+inoremap <C-v> <Esc>"+pa
 
-inoremap <c-bs> <esc>vbs
-inoremap <c-del> <Esc>viws
 vnoremap <bs> X
 nnoremap <bs> X
 
@@ -33,13 +26,29 @@ inoremap <C-S-CR> <Esc>O
 nnoremap <S-CR> o<Esc>k
 nnoremap <C-S-CR> O<Esc>j
 
+vnoremap # y/<C-R>"<CR>
+
 " recording
 nnoremap \a @j
 nnoremap \b @b
 nnoremap \q @q
 
-inoremap <expr>-<tab> getline('.')=="" ? "\<esc>cc" : "-\<tab>"
-nnoremap <expr>0 col('.') == 1 ? '^' : '0'
+function! s:getfirstpos()
+    let line = getline('.')
+    return match(line, '\S')
+endfunction
+function! s:shouldindent()
+    let indlen = cindent('.')
+    if col('.') - 1 >= indlen
+        return 0
+    else
+        return 1
+    endif
+endfunction
+inoremap <expr> <tab> <SID>shouldindent() && getline('.')=="" ? "\<esc>cc" :
+            \ pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+nnoremap <expr>0 col('.')-1==<SID>getfirstpos() ? '0' : '^'
 
 function! Terminal_metamode(mode)
     set ttimeout
