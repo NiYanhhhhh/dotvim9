@@ -33,9 +33,9 @@ set shiftwidth=4
 au filetype python,java,vim set tabstop=4
 au filetype python,java,vim set softtabstop=4
 au filetype python,java,vim set shiftwidth=4
-au filetype json,markdown set tabstop=2
-au filetype json,markdown set softtabstop=2
-au filetype json,markdown set shiftwidth=2
+au filetype json set tabstop=2
+au filetype json set softtabstop=2
+au filetype json set shiftwidth=2
 
 " appearance
 if has('termguicolors')
@@ -55,9 +55,12 @@ set cursorcolumn
 set ruler
 set number
 set relativenumber
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
 set scrolloff=3
 set showmode
 set showcmd
 set mouse=a
+
+" behaviors
+autocmd BufEnter * if &filetype == 'qf' && winnr('$') < 2 | q | endif
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber

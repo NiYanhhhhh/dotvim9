@@ -6,4 +6,8 @@ exec 'source '.g:home.'/pluggins.vim'
 exec 'source '.g:home.'/base.vim'
 exec 'source '.g:home.'/keymaps.vim'
 exec 'source '.g:home.'/dispatch.vim'
-colorscheme gruvbox-material
+if has_key(environ(), 'DISPLAY')
+    colorscheme gruvbox-material
+else
+    colorscheme default
+endif

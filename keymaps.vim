@@ -4,10 +4,10 @@ inoremap <m-k> <up>
 inoremap <m-h> <left>
 inoremap <m-l> <right>
 
-nnoremap <m-k> :resize +1<cr>
-nnoremap <m-j> :resize -1<cr>
-nnoremap <m-h> :vertical resize -1<cr>
-nnoremap <m-l> :vertical resize +1<cr>
+nnoremap <silent> <m-k> :resize +1<cr>
+nnoremap <silent> <m-j> :resize -1<cr>
+nnoremap <silent> <m-h> :vertical resize -1<cr>
+nnoremap <silent> <m-l> :vertical resize +1<cr>
 
 nnoremap <c-a> ggVG
 vnoremap <C-c> "+y
@@ -33,22 +33,32 @@ nnoremap \a @j
 nnoremap \b @b
 nnoremap \q @q
 
-function! s:getfirstpos()
+function! Getfirstpos()
     let line = getline('.')
     return match(line, '\S')
 endfunction
-function! s:shouldindent()
+function! Shouldindent()
     let indlen = cindent('.')
+
     if col('.') - 1 >= indlen
         return 0
     else
         return 1
     endif
 endfunction
-inoremap <expr> <tab> <SID>shouldindent() && getline('.')=="" ? "\<esc>cc" :
+inoremap <expr> <tab> Shouldindent() && getline('.')=="" ? repeat(" ", cindent(line('.'))) :
             \ pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-nnoremap <expr>0 col('.')-1==<SID>getfirstpos() ? '0' : '^'
+nnoremap <expr>0 col('.')-1 == Getfirstpos() ? '0' : '^'
+vnoremap <expr>0 col('.')-1 == Getfirstpos() ? '0' : '^'
+
+function! Changebackgroud()
+    if &background == 'light'
+        set background=dark
+    elseif &background == 'dark'
+        set background=light
+    endif
+endfunction
 
 function! Terminal_metamode(mode)
     set ttimeout
@@ -147,3 +157,8 @@ tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
 tnoremap <C-l> <C-\><C-N><C-w>l
+
+" quickfix
+nnoremap <silent> \co :copen 12<cr>
+nnoremap <silent> \cc :cclose<cr>
+

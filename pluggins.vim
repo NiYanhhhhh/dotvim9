@@ -12,28 +12,38 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'cormacrelf/vim-colors-github'
 Plug 'sainnhe/gruvbox-material'
 Plug 'ncm2/float-preview.nvim'
+
 " tools
 Plug 'tpope/vim-fugitive'
 Plug 'ianva/vim-youdao-translater'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'chrisbra/changesPlugin'
+
 " debug
 Plug 'skywind3000/asyncrun.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+
 " navigation
 Plug 'airblade/vim-rooter'
-Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
+
 " code assistance
 Plug 'Chiel92/vim-autoformat'
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'preservim/nerdcommenter'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
+Plug 'cohama/lexima.vim'
+Plug 'Shougo/echodoc'
+
 " syntax
-Plug 'neomake/neomake'
+Plug 'dense-analysis/ale'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+
 " search
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
@@ -125,7 +135,7 @@ noremap <leader>yd :<c-u>Yde<cr>o
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_patterns = ['Rakefile',
             \ '.git/', '.project', 'README.*', 'LICENSE', '.gitignore']
-let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd = 'lcd'
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger = "<M-/>"
@@ -135,15 +145,23 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-h>"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
 " ale
-" let g:ale_java_eclipse_workspace_path = '/home/niyan/eclipse-workspace'
-" " let g:ale_java_eclipselsp_path = '/home/niyan/jdt-language-server-0.9.0-201711302113'
+let g:ale_java_eclipse_workspace_path = '/home/niyan/eclipse-workspace'
+" let g:ale_java_eclipselsp_path = '/home/niyan/jdt-language-server-0.9.0-201711302113'
 " let g:ale_java_eclipselsp_path = '/home/niyan/eclipse.jdt.ls/eclipse.jdt.ls'
-" let g:ale_linters = {'java' : ['javac']}
-" au Filetype java compiler javac
+let g:ale_linters = {'java' : ['javac']}
+au Filetype java compiler javac
 
 " deoplete.nvim
-
 let g:deoplete#enable_at_startup = 1
+
+let g:lexima_no_default_rules = 1
+call lexima#set_default_rules()
+call lexima#insmode#map_hook('before', '<CR>', '')
+
+function! s:my_cr_function() abort
+  return deoplete#close_popup() . lexima#expand('<CR>', 'i')
+endfunction
+inoremap <silent> <expr> <CR> <SID>my_cr_function()
 
 " deoplete-tabnine
 call deoplete#custom#var('tabnine', {
@@ -171,7 +189,7 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0
 
 " neomake
-call neomake#configure#automake('nwr', 500)
+" call neomake#configure#automake('nwr', 500)
 
 " syntastic
 let g:syntastic_check_on_open = 0
@@ -263,9 +281,32 @@ autocmd Filetype vim let b:shield_multiline_rules_extend = {
             \ }
 autocmd Filetype markdown let b:shield_rules_extend = {
             \ '$': '$',
+            \ '**': '**',
             \ '<sup>': '</sup>',
             \ '<sub>': '</sub>',
             \ }
+autocmd Filetype markdown let b:shield_multiline_rules_extend = {
+            \ '$$': '$$',
+            \ '```': '```',
+            \ }
+autocmd Filetype snippets let b:shield_multiline_rules_extend = {
+            \ '\^snippets \.\+':'endsnippets',
+            \ }
+autocmd Filetype julia let b:shield_multiline_rules_extend = {
+            \ '\^\s\*function \.\+(\.\+)':'end',
+            \ '\^\s\*if \.\+':'end',
+            \ '\^\s\*for \.\+':'end',
+            \ '\^\s\*while \.\+':'end',
+            \ }
+
+" asyncrun
+let g:asyncrun_open = 12
+autocmd User AsyncRunStop cw
+
+" ale
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+
+" lexima
 
 
 """ plugin configurations end "

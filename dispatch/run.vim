@@ -14,3 +14,6 @@ au Filetype vim nnoremap <F5> :source %<CR>
 " python
 au Filetype python nnoremap <F5> :AsyncRun -mode=terminal -rows=12 python %<CR>
 
+" c
+au Filetype c nnoremap <silent> <F6> :exec "AsyncRun -rows=12 gcc % -o /tmp/".expand("%:r")<CR>
+au Filetype c nnoremap <silent> <F5> :exec "AsyncRun -mode=terminal -rows=12 gcc % -o /tmp/".expand("%:r")."\&\& /tmp/".expand("%:r")<CR>
