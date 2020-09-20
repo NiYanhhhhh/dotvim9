@@ -7,19 +7,19 @@ endsnippet
 
 snippet fue "function" b
 function! ${1:F}($2)
-	$0
+	${VISUAL}$0
 endfunction
 endsnippet
 
 snippet fu "function" b
 function ${1:F}($2)
-	$0
+	${VISUAL}$0
 endfunction
 endsnippet
 
 snippet if "if" b
 if $1
-	$0
+	${VISUAL}$0
 endif
 endsnippet
 
@@ -31,6 +31,6 @@ endsnippet
 
 snippet for "for" b
 for ${1:i} in ${2:list}
-	$0
+	${VISUAL}$0
 endfor
 endsnippet

@@ -33,13 +33,14 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'preservim/nerdcommenter'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
-Plug 'cohama/lexima.vim'
+" Plug 'cohama/lexima.vim'
 Plug 'Shougo/echodoc'
 
 " syntax
 Plug 'dense-analysis/ale'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'sheerun/vim-polyglot'
 
 " search
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -54,7 +55,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 " python
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'deoplete-plugins/deoplete-jedi'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Sirver/ultisnips'
@@ -81,6 +82,8 @@ let g:autoformat_autoindent = 0
 autocmd FileType vim,tex let b:autoformat_autoindent = 1
 let g:formatter_yapf_style = 'pep8'
 noremap = :Autoformat<cr>
+let g:formatdef_my_custom_c = '"astyle --mode=c --style=java -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+let g:formatters_c = ['my_custom_c']
 
 " airline
 let g:airline#extensions#tabline#enabled = 1
@@ -132,7 +135,7 @@ nnoremap <silent> <c-t> :<c-u>Ydc<cr>
 noremap <leader>yd :<c-u>Yde<cr>o
 
 " vim-rooter
-let g:rooter_change_directory_for_non_project_files = 'current'
+let g:rooter_change_directory_for_non_project_files = ''
 let g:rooter_patterns = ['Rakefile',
             \ '.git/', '.project', 'README.*', 'LICENSE', '.gitignore']
 let g:rooter_cd_cmd = 'lcd'
@@ -141,10 +144,11 @@ let g:rooter_cd_cmd = 'lcd'
 let g:UltiSnipsExpandTrigger = "<M-/>"
 let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-h>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
 " ale
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_java_eclipse_workspace_path = '/home/niyan/eclipse-workspace'
 " let g:ale_java_eclipselsp_path = '/home/niyan/jdt-language-server-0.9.0-201711302113'
 " let g:ale_java_eclipselsp_path = '/home/niyan/eclipse.jdt.ls/eclipse.jdt.ls'
@@ -153,15 +157,6 @@ au Filetype java compiler javac
 
 " deoplete.nvim
 let g:deoplete#enable_at_startup = 1
-
-let g:lexima_no_default_rules = 1
-call lexima#set_default_rules()
-call lexima#insmode#map_hook('before', '<CR>', '')
-
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . lexima#expand('<CR>', 'i')
-endfunction
-inoremap <silent> <expr> <CR> <SID>my_cr_function()
 
 " deoplete-tabnine
 call deoplete#custom#var('tabnine', {
@@ -184,7 +179,7 @@ autocmd User FloatPreviewWinOpen call DisableExtras()
 
 
 " jedi-vim
-let g:jedi#completions_command = "<C-N>"
+let g:jedi#completions_command = "<A-/>"
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0
 
@@ -271,42 +266,9 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 " tagbar
 nmap <F8> :TagbarToggle<cr>
 
-" shield
-autocmd Filetype tex let b:shield_rules_extend = {'$': '$'}
-autocmd Filetype vim let b:shield_multiline_rules_extend = {
-            \ '\^\s\*if \.\+':'endif',
-            \ '\^\s\*for \.\+':'endfor',
-            \ '\^\s\*while \.\+':'endwhile',
-            \ '\^\s\*function!\= \.\+':'endfunction',
-            \ }
-autocmd Filetype markdown let b:shield_rules_extend = {
-            \ '$': '$',
-            \ '**': '**',
-            \ '<sup>': '</sup>',
-            \ '<sub>': '</sub>',
-            \ }
-autocmd Filetype markdown let b:shield_multiline_rules_extend = {
-            \ '$$': '$$',
-            \ '```': '```',
-            \ }
-autocmd Filetype snippets let b:shield_multiline_rules_extend = {
-            \ '\^snippets \.\+':'endsnippets',
-            \ }
-autocmd Filetype julia let b:shield_multiline_rules_extend = {
-            \ '\^\s\*function \.\+(\.\+)':'end',
-            \ '\^\s\*if \.\+':'end',
-            \ '\^\s\*for \.\+':'end',
-            \ '\^\s\*while \.\+':'end',
-            \ }
-
 " asyncrun
 let g:asyncrun_open = 12
 autocmd User AsyncRunStop cw
-
-" ale
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-
-" lexima
 
 
 """ plugin configurations end "

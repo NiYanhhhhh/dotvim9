@@ -40,14 +40,17 @@ endfunction
 function! Shouldindent()
     let indlen = cindent('.')
 
+    if indlen == 0
+        return 0
+    endif
     if col('.') - 1 >= indlen
         return 0
     else
         return 1
     endif
 endfunction
-inoremap <expr> <tab> Shouldindent() && getline('.')=="" ? repeat(" ", cindent(line('.'))) :
-            \ pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <tab> pumvisible() ? "\<C-n>" :
+            \ Shouldindent() ? "\<BS>\<CR>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 nnoremap <expr>0 col('.')-1 == Getfirstpos() ? '0' : '^'
 vnoremap <expr>0 col('.')-1 == Getfirstpos() ? '0' : '^'
