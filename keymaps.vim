@@ -122,10 +122,22 @@ imap ïR <f3>
 vmap ïR <f3>
 cmap ïR <f3>
 
-autocmd BufNewFile *.java,*.h,*.hpp,*.c,*.cpp,*.mk,*.sh,*.py exec ":call Settitle()"
+autocmd BufNewFile *.lua,*.java,*.h,*.hpp,*.c,*.cpp,*.mk,*.sh,*.py exec ":call Settitle()"
 func! Settitle()
     if &filetype == 'make'
     elseif &filetype == 'sh'
+        call setline(1,"#!/usr/bin/sh")
+        call setline(2,"")
+    elseif &filetype == 'lua'
+        call setline(1,"#!/usr/bin/lua")
+        call setline(2,"")
+        call setline(3,"local M = {}")
+        call setline(4,"")
+        call setline(5,"")
+        call setline(6,"")
+        call setline(7,"return M")
+        call cursor(5, 1)
+        return
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
         call setline(2,"#-*- coding: utf-8 -*-")
@@ -143,6 +155,7 @@ func! Settitle()
             \ ''])
     else
     endif
+    execute 'normal! G'
 endfunc
 
 " python config"
@@ -164,4 +177,7 @@ tnoremap <C-l> <C-\><C-N><C-w>l
 " quickfix
 nnoremap <silent> \co :copen 12<cr>
 nnoremap <silent> \cc :cclose<cr>
+
+" omnifunc
+inoremap <m-/> <c-x><c-o>
 

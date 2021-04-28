@@ -20,8 +20,8 @@ set encoding=utf-8
 set termencoding=utf-8
 set fencs=utf-8
 let $lang = 'en_us.utf-8'
-let g:python_host_prog='/usr/bin/python'
-let g:python2_host_prog='/usr/bin/python2'
+let g:python3_host_prog='/usr/bin/python'
+let g:python_host_prog='/usr/bin/python2'
 
 " intent settings"
 set expandtab
@@ -30,16 +30,16 @@ set autoindent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-au filetype python,java,vim set tabstop=4
-au filetype python,java,vim set softtabstop=4
-au filetype python,java,vim set shiftwidth=4
-au filetype json set tabstop=2
-au filetype json set softtabstop=2
-au filetype json set shiftwidth=2
+au filetype python,java,vim,scala set tabstop=4
+au filetype python,java,vim,scala set softtabstop=4
+au filetype python,java,vim,scala set shiftwidth=4
+au filetype json,lua set tabstop=2
+au filetype json,lua set softtabstop=2
+au filetype json,lua set shiftwidth=2
 
 " appearance
 if has('termguicolors')
-  set termguicolors
+    set termguicolors
 endif
 set background=light
 syntax on
@@ -59,8 +59,12 @@ set scrolloff=3
 set showmode
 set showcmd
 set mouse=a
+hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
 
 " behaviors
 autocmd BufEnter * if &filetype == 'qf' && winnr('$') < 2 | q | endif
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
+set completeopt+=noinsert,noselect

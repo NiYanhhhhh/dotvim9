@@ -18,6 +18,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'ianva/vim-youdao-translater'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'chrisbra/changesPlugin'
+Plug 'yianwillis/vimcdoc'
 
 " debug
 Plug 'skywind3000/asyncrun.vim'
@@ -28,6 +29,7 @@ Plug 'airblade/vim-rooter'
 Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
 
 " code assistance
+Plug 'DaeZak/crafttweaker-vim-highlighting'
 Plug 'Chiel92/vim-autoformat'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'preservim/nerdcommenter'
@@ -38,6 +40,7 @@ Plug 'Shougo/echodoc'
 
 " syntax
 Plug 'dense-analysis/ale'
+" Plug 'neomake/neomake'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'sheerun/vim-polyglot'
@@ -48,11 +51,16 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
+" LSP plugins
+Plug 'mfussenegger/nvim-jdtls'
+Plug 'neovim/nvim-lspconfig'
+
 """"""""""""""""""""""""""""""""""
 """ code complete
 """"""""""""""""""""""""""""""""""
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'Shougo/neopairs.vim'
+" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 " python
 " Plug 'davidhalter/jedi-vim'
@@ -66,6 +74,9 @@ Plug 'deoplete-plugins/deoplete-zsh'
 " c/cpp
 Plug 'Shougo/neoinclude.vim'
 Plug 'xavierd/clang_complete'
+" lua
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-lua-ftplugin'
 
 """"""""""""""""""""""""""""""""""
 "
@@ -84,6 +95,8 @@ let g:formatter_yapf_style = 'pep8'
 noremap = :Autoformat<cr>
 let g:formatdef_my_custom_c = '"astyle --mode=c --style=java -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 let g:formatters_c = ['my_custom_c']
+let g:formatdef_lua_formatter = "'lua-format --config=' . getenv('HOME') . '/.config/luaformatter/config.yaml'"
+let g:formatters_lua = ['lua_formatter']
 
 " airline
 let g:airline#extensions#tabline#enabled = 1
@@ -135,7 +148,7 @@ nnoremap <silent> <c-t> :<c-u>Ydc<cr>
 noremap <leader>yd :<c-u>Yde<cr>o
 
 " vim-rooter
-let g:rooter_change_directory_for_non_project_files = ''
+let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_patterns = ['Rakefile',
             \ '.git/', '.project', 'README.*', 'LICENSE', '.gitignore']
 let g:rooter_cd_cmd = 'lcd'
@@ -148,15 +161,38 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
 " ale
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_java_eclipse_workspace_path = '/home/niyan/eclipse-workspace'
-" let g:ale_java_eclipselsp_path = '/home/niyan/jdt-language-server-0.9.0-201711302113'
-" let g:ale_java_eclipselsp_path = '/home/niyan/eclipse.jdt.ls/eclipse.jdt.ls'
-let g:ale_linters = {'java' : ['javac']}
-au Filetype java compiler javac
+let g:ale_sign_error = "E"
+let g:ale_sign_warning = "W"
+let g:ale_sign_info = "I"
 
-" deoplete.nvim
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_java_eclipselsp_workspace_path = '/home/.eclipselsp'
+let g:ale_java_eclipselsp_path = '/home/niyan/Codes/japroj/eclipse.jdt.ls'
+let g:ale_linters = {
+            \ 'java' : [],
+            \ 'lua' : [],
+            \ 'python' : ['pylint']
+            \ }
+let g:ale_java_eclipselsp_config_path = "/home/niyan/Codes/japroj/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/config_linux"
+
+" let g:ale_python_pylint_executable = 'ale-python-check'
+
+"" deoplete.nvim
 let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('profile', v:true)
+" call deoplete#enable_logging('DEBUG', '/home/niyan/deoplete.log')
+" call deoplete#custom#source('nvimlsp', 'is_debug_enabled', v:true)
+" call deoplete#custom#option('omni_patterns', {
+            " \ 'java': '[^. *\t].\{-}\w*',
+            " \ })
+call deoplete#custom#var('omni', 'functions', {
+            \ 'lua' : 'nvimlsc#complete',
+            \ 'java' : 'nvimlsc#complete'
+            \ })
+" call deoplete#custom#var('omni', 'input_patterns', {
+            " \ 'lua': '\w+|\w+[.:]\w*',
+            " \ 'java': '[^. \t0-9]\.{0,1}\w*'
+            " \ })
 
 " deoplete-tabnine
 call deoplete#custom#var('tabnine', {
@@ -165,6 +201,9 @@ call deoplete#custom#var('tabnine', {
             \ })
 
 call deoplete#custom#option('camel_case', 'v:true')
+
+" deoplete-zsh
+call deoplete#custom#source('zsh', 'filetypes', ['zsh', 'sh'])
 
 " float-preview
 set completeopt-=preview
@@ -184,7 +223,7 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0
 
 " neomake
-" call neomake#configure#automake('nwr', 500)
+" call neomake#configure#automake('nw', 500)
 
 " syntastic
 let g:syntastic_check_on_open = 0
@@ -269,6 +308,40 @@ nmap <F8> :TagbarToggle<cr>
 " asyncrun
 let g:asyncrun_open = 12
 autocmd User AsyncRunStop cw
+nnoremap <leader>ru :AsyncRun -mode=terminal -rows=12 
+nnoremap <leader>rb :AsyncRun -rows=12 
 
+" LSP
+if has('nvim-0.5')
+    augroup jdtls_lsp
+        au!
+        au BufEnter *.java lua require('jdtls_setup').setup()
+    augroup end
+    let lspconfigs = ['luals_setup']
+    for config in lspconfigs
+        lua require(vim.api.nvim_eval('config')).setup()
+    endfor
+endif
+
+au FileType java noremap <silent> <buffer> <leader>o <CMD>lua require('jdtls').organize_imports()<CR>
+au BufEnter *.java,*.lua noremap <silent> <buffer> K <CMD>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <buffer> gd <CMD>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <buffer> gD <CMD>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <buffer> <leader>li <CMD>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <buffer> <leader>lr <CMD>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <buffer> <leader>r <CMD>lua vim.lsp.buf.rename()<CR>
+vnoremap <silent> <buffer> gd <CMD>lua vim.lsp.buf.definition()<CR>
+vnoremap <silent> <buffer> gD <CMD>lua vim.lsp.buf.declaration()<CR>
+vnoremap <silent> <buffer> <leader>li <CMD>lua vim.lsp.buf.implementation()<CR>
+vnoremap <silent> <buffer> <leader>lr <CMD>lua vim.lsp.buf.references()<CR>
+vnoremap <silent> <buffer> <leader>r <CMD>lua vim.lsp.buf.rename()<CR>
+
+set completefunc=v:lua.vim.lsp.omnifunc
+
+" vim-lua-ftplugin
+let g:lua_check_syntax = 0
+let g:lua_complete_dynamic = 0
+let g:lua_define_completion_mappings = 0
+let g:lua_complete_omni = 1
 
 """ plugin configurations end "
