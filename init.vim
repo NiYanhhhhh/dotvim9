@@ -9,6 +9,9 @@ exec 'source '.g:home.'/dispatch.vim'
 
 if has_key(environ(), 'DISPLAY')
     colorscheme gruvbox-material
+    if exists('g:goneovim')
+        set background=dark
+    endif
 else
     colorscheme default
 endif

@@ -1,5 +1,7 @@
 function! nvimlsc#complete(findstart, base) abort
-    lua require('lsc').complete(vim.api.nvim_eval('a:findstart'), vim.api.nvim_eval('a:base'))
+    if g:deoplete_nvimlsp_enable
+        lua require('lsc').complete(vim.api.nvim_eval('a:findstart'), vim.api.nvim_eval('a:base'))
+    endif
 endfunction
 
 function! nvimlsc#testGetItem() abort

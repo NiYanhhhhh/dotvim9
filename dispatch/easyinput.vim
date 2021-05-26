@@ -60,7 +60,7 @@ function! EICloseParser(open, close)
             return "\<Right>"
         " else
             " return a:close
-        endif
+        " endif
     endif
     return a:close
 endfunction

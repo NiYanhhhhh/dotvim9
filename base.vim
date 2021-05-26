@@ -68,3 +68,6 @@ autocmd BufEnter * if &filetype == 'qf' && winnr('$') < 2 | q | endif
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 set completeopt+=noinsert,noselect
+
+" netrw
+let g:netrw_banner = 0

@@ -18,10 +18,7 @@ class Source(Base):
         self.name = 'nvimlsp'
         self.mark = '[lsp]'
         self.description = 'nvim build-in lsp source for deoplete'
-        self.input_patterns = {
-            'lua': '\w+|\w+[.:]\w*',
-            #  'java': '[^. \t0-9]\.*\w*'
-        }
+        self.input_pattern = '[^. \t0-9][.:]*\w*'
         self.is_bytepos = True
         self.rank = 500
 

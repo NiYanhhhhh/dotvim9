@@ -7,25 +7,33 @@ local command = vim.api.nvim_command
 local util = vim.lsp.util
 local api = vim.api
 
+local loclist_type_map = {
+  [vim.lsp.protocol.DiagnosticSeverity.Error] = 'E',
+  [vim.lsp.protocol.DiagnosticSeverity.Warning] = 'W',
+  [vim.lsp.protocol.DiagnosticSeverity.Information] = 'I',
+  [vim.lsp.protocol.DiagnosticSeverity.Hint] = 'I'
+}
 
---@private
---to fix position problem which cause wrong character
+
+-- @private
+-- to fix position problem which cause wrong character
 -- local function get_character(extra_str)
-  -- local row, col = unpack(api.nvim_win_get_cursor(0))
-  -- row = row - 1
-  -- local line = api.nvim_buf_get_lines(0, row, row+1, true)[1]
-  -- if not line then
-    -- return { line = 0; character = 0; }
-  -- end
-  -- col = vim.str_utfindex(line .. extra_str, col + string.len(extra_str))
-  -- return { line = row; character = col; }
+-- local row, col = unpack(api.nvim_win_get_cursor(0))
+-- row = row - 1
+-- local line = api.nvim_buf_get_lines(0, row, row+1, true)[1]
+-- if not line then
+-- return { line = 0; character = 0; }
+-- end
+-- col = vim.str_utfindex(line .. extra_str, col + string.len(extra_str))
+-- return { line = row; character = col; }
 -- end
 
 local function get_complete(prefix)
+  local ms_wait = vim.g.deoplete_nvimlsp_wait or 200
   local params = util.make_position_params()
   local bufnr = api.nvim_get_current_buf()
   local result_str = ''
-  local respond = request(bufnr, 'textDocument/completion', params, 2000)
+  local respond = request(bufnr, 'textDocument/completion', params, ms_wait)
   local err = ''
   local result_table = {}
 
@@ -73,7 +81,7 @@ local function get_complete(prefix)
 end
 
 function M.complete(findstart, base)
-  local has_buffer_clients = not vim.tbl_isempty(vim.lsp.get_active_clients())
+  local has_buffer_clients = not vim.tbl_isempty(vim.lsp.buf_get_clients())
   if not has_buffer_clients then
     if findstart == 1 then
       return -2
@@ -95,6 +103,41 @@ function M.complete(findstart, base)
   else
     command('return [' .. Matches .. ']')
   end
+end
+
+function M.set_all_loclist()
+
+  local diags = vim.lsp.diagnostic.get_all()
+
+  local items = {}
+  local insert_diag = function(diag, bufnr)
+    local pos = diag.range.start
+    local row = pos.line
+    local col = util.character_offset(bufnr, row, pos.character)
+
+    local line = (api.nvim_buf_get_lines(bufnr, row, row + 1, false) or {""})[1]
+
+    table.insert(items, {
+      bufnr = bufnr,
+      lnum = row + 1,
+      col = col + 1,
+      text = line .. " | " .. diag.message,
+      type = loclist_type_map[diag.severity or vim.lsp.protocol.DiagnosticSeverity.Error] or 'E'
+    })
+  end
+
+  for bufnr, buffer_diags in pairs(diags) do
+    for _, diag in ipairs(buffer_diags) do
+      insert_diag(diag, bufnr)
+    end
+  end
+
+  table.sort(items, function(a, b)
+    return a.bufnr < b.bufnr or a.lnum < b.lnum
+  end)
+  util.set_loclist(items)
+
+  vim.cmd [[lopen]]
 end
 
 function M.test_item()

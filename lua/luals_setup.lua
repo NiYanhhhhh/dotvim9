@@ -2,8 +2,6 @@
 
 local M = {}
 
-local util = require('lspconfig').util
-
 local on_attach = function(client, bufnr)
   require('commonls_setup').common_on_attach(client, bufnr)
 end
