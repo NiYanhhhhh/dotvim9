@@ -1,0 +1,114 @@
+snippet mc "TexMagic Comment" b
+%! TEX program = ${1:xelatex}
+%! BIB program = ${1:bibtex}
+
+$0
+endsnippet
+
+snippet "\\?b(egin)?" "begin{} / end{}" brs
+\begin{${1:something}}$2
+	${0:${VISUAL}}
+\end{$1}
+endsnippet
+
+snippet frac "\frac{}{}"
+\frac{$1}{$2}$0
+endsnippet
+
+snippet sq "\sqrt{}{}"
+\sq{$1}{$2}$0
+endsnippet
+
+snippet d "\draw"
+\draw$0
+endsnippet
+
+snippet nd "node[]"
+node[${1:below}] {${VISUAL}$0}
+endsnippet
+
+snippet s "\sum_{}^{}"
+\sum_{$1}^{$2} $0
+endsnippet
+
+snippet p "\prod_{}^{}"
+\prod_{$1}^{$2} $0
+endsnippet
+
+snippet fom "fomular*" b
+\[
+	${VISUAL}$0
+\]
+endsnippet
+
+snippet eq "fomular" b
+\begin{equation}
+	${VISUAL}$0
+\end{equation}
+endsnippet
+
+snippet abs "| var |"
+\lvert $1 \rvert $0
+endsnippet
+
+snippet "fi(gure)?" "figure/table env" r
+\begin{${1:figure}}[${2:htbp}]
+	\centering
+	${VISUAL}$0
+	\caption{$3}
+	\label{$4}
+\end{$1}
+endsnippet
+
+snippet fl "inline fomular($\rm{..}$)" w
+$\rm{${VISUAL}$1}$$0
+endsnippet
+
+snippet title "info of me" b
+\title{\heiti\bfseries\zihao 2  $1}
+\author{\kaishu\zihao 5 倪彦 \qquad 光信息91 \qquad 2194312968}
+\date{${2:\today}}
+endsnippet
+
+snippet ctset "my \ctexset {...}" b
+\ctexset {
+	section/format += \heiti,
+	subsection/format = \large\heiti,
+	subsection/numberformat += \bfseries,
+	paragraph/format = \normalsize\heiti,
+	figurename = 图,
+	tablename = 表,
+	today = small
+}
+endsnippet
+
+snippet pp "plain picture" b
+\tikz\fill[white] (0,0) -- (${1:8},${2:3});$0
+endsnippet
+
+snippet tt "booktab" b
+\begin{tabular}[${1:c}]{$2}
+	\hline
+	$3 \\\
+	\hline
+	$4 \\\
+	\hline
+\end{tabular}
+endsnippet
+
+snippet lstset "my \lstset {...}" b
+\lstset{
+	frame = shadowbox,
+	breaklines = true,
+	tabsize = 4,
+	numbers = left
+}
+endsnippet
+
+snippet eqtag "make tag following section"
+\makeatletter
+\@addtoreset{equation}{section}
+\makeatother
+\renewcommand\theequation{\arabic{section}-\arabic{equation}}
+endsnippet
+

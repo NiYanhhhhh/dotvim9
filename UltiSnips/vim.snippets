@@ -1,0 +1,53 @@
+snippet " "comments" b
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" $1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+$0
+endsnippet
+
+snippet fu "function" b
+function! `!v expand('%:p') =~ 'autoload' ? substitute(matchstr(expand('%:p'),'autoload/\zs.*\ze.vim'),'[/\\]','#','g').'#' : ''`$1($2) abort
+	${VISUAL}$0
+endfunction
+endsnippet
+
+snippet fus "function" b
+function! s:$1($2) abort
+	${VISUAL}$0
+endfunction
+endsnippet
+
+snippet if "if" b
+if $1
+	${VISUAL}$0
+endif
+endsnippet
+
+snippet ife "if !exists(...)" b
+if !exists('$1')
+	let $1 = $0
+endif
+endsnippet
+
+snippet for "for" b
+for ${1:i} in ${2:list}
+	${VISUAL}$0
+endfor
+endsnippet
+
+snippet te "test echom indicator" b
+call test#echowarn("== ${VISUAL}$1$0 ==========")
+Ins ${VISUAL}$1
+endsnippet
+
+snippet d "def" b
+def $1($2)
+	${VISUAL}$0
+enddef
+endsnippet
+
+snippet ed "def" b
+export def $1($2)
+	${VISUAL}$0
+enddef
+endsnippet
