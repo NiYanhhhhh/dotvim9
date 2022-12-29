@@ -76,3 +76,13 @@ function! keymap#win_oprate()
         redraw
     endwhile
 endfunction
+
+function! keymap#gotofirst() abort
+    let pos = col('.') - 1
+    let first_pos = match(getline('.'), '\S')
+    if pos == first_pos
+        return '0'
+    else
+        return '^'
+    endif
+endfunction

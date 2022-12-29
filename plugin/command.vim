@@ -1,1 +1,1 @@
-command! NU call util#nu()
+command! NU call util#Nu()

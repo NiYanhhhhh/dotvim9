@@ -1,4 +1,4 @@
-function! s:run_part_code(reg) abort
+function! RunPartCode(reg) abort
     let code = getreg(a:reg)
     let l_code = split(code, '\n')
     let space_len = match(l_code[-1], '\S')
@@ -13,6 +13,6 @@ function! s:run_part_code(reg) abort
     endfor
 endfunction
 
-nnoremap <buffer> <silent> <f5> <cmd>source %<cr>
-vnoremap <buffer> <silent> <script> <F5> "by<cmd><SID>run_part_code("b")<cr>
+nnoremap <buffer> <f5> <cmd>source %<cr>
+vnoremap <buffer> <script> <F5> :source<cr>
 
