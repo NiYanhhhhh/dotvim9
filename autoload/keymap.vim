@@ -86,3 +86,37 @@ function! keymap#gotofirst() abort
         return '^'
     endif
 endfunction
+
+function! keymap#lsp() abort
+    nnoremap <leader>lh <cmd>LspHover<cr>
+    nnoremap <leader>r <cmd>LspRename<cr>
+    nnoremap <leader>dl <cmd>LspDiagCurrent<cr>
+    nnoremap <leader>ds <cmd>LspDiagShow<cr>
+    nnoremap <leader>dN <cmd>LspDiagPrev<cr>
+    nnoremap <leader>dn <cmd>LspDiagNext<cr>
+    nnoremap <c-s> <cmd>LspShowSignature<cr>
+    inoremap <c-s> <cmd>LspShowSignature<cr>
+    nnoremap <leader>da <cmd>LspCodeAction<cr>
+    nnoremap gd <cmd>LspGotoDefinition<CR>
+    nnoremap gD <cmd>LspGotoDeclaration<CR>
+    nnoremap <leader>li <cmd>LspPeekImpl<CR>
+    nnoremap <leader>lr <cmd>LspPeekReferences<CR>
+    nnoremap <leader>ld <cmd>LspPeekDefinition<CR>
+endfunction
+
+function! keymap#coc() abort
+    nnoremap <leader>lh <cmd>call CocActionAsync("doHover")<cr>
+    nnoremap <leader>r <cmd>call CocActionAsync("rename")<cr>
+    nnoremap <leader>dl <cmd>LspDiagCurrent<cr>
+    nnoremap <leader>ds <cmd>LspDiagShow<cr>
+    nnoremap <leader>dN <cmd>LspDiagPrev<cr>
+    nnoremap <leader>dn <cmd>LspDiagNext<cr>
+    nnoremap <c-s> <cmd>LspShowSignature<cr>
+    inoremap <c-s> <cmd>LspShowSignature<cr>
+    nnoremap <leader>da <cmd>LspCodeAction<cr>
+    nnoremap gd <cmd>LspGotoDefinition<CR>
+    nnoremap gD <cmd>LspGotoDeclaration<CR>
+    nnoremap <leader>li <cmd>LspPeekImpl<CR>
+    nnoremap <leader>lr <cmd>LspPeekReferences<CR>
+    nnoremap <leader>ld <cmd>LspPeekDefinition<CR>
+endfunction

@@ -1,4 +1,6 @@
 " --base-- "
+let g:mapleader = "\<Space>"
+
 "inoremap <m-j> <down>
 "inoremap <m-k> <up>
 "inoremap <m-h> <left>

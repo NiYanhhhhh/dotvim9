@@ -12,7 +12,8 @@ Plug 'tpope/vim-commentary'
 Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim'
 "lsp
-Plug 'yegappan/lsp'
+Plug 'yegappan/lsp', {'on': []}
+Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}
 
 " --others-- "
 if !g:vimtex_loaded

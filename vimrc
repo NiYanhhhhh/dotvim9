@@ -4,8 +4,9 @@ let g:home = "~/.vim"
 let g:appearance_load = 0
 let g:fcitx_load = 0
 let g:nu_load = 0
+let g:mapleader = "\<Space>"
 let g:snips_frame = 'ultisnips'
-let g:complete_frame = ''
+let g:complete_frame = 'lsp'
 let g:tree_frame = 'netwr'
 let g:color_set = 'ayu'
 let g:root_pattern = ['.root', '.vimproject']
@@ -21,12 +22,26 @@ let g:vimtex_loaded = 0 "set to 1 to disable vimtex
 """""""""""""""
 exec 'source '.g:home.'/pluglist.vim'
 call plugin#basic_setup()
-"my own plugins
-call autopair#Init()
 au Filetype tex call plugin#vimtex_setup()
 
 " --lsp-- "
-call lsp#LspSetup()
+if g:complete_frame == 'lsp'
+    let lsp_opt = {
+                \   "showInlayHints": v:true,
+                \   "usePopupInCodeAction": v:true,
+                \   "showSignature": v:false
+                \ }
+    call plug#load('lsp')
+    call lsp#LspSetup()
+    call LspOptionsSet(lsp_opt)
+elseif g:complete_frame == 'coc'
+    call plug#load('coc.nvim')
+    call coc#Setup()
+endif
+
+"my own plugins
+call autopair#Init()
+
 
 """ KEYMAPS """
 """""""""""""""
