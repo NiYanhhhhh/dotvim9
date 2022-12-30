@@ -55,8 +55,12 @@ function! s:git()
     if expand('%:t') =~? 'Tagbar\|Gundo\|NERD'
         return ''
     endif
-    let branch = gitbranch#name()
 
+    if !exists('gitbranch#name')
+        return ''
+    endif
+
+    let branch = gitbranch#name()
     if branch == ""
         return ""
     endif

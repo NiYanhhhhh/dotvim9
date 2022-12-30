@@ -4,12 +4,12 @@ import autoload "lsp/lsp.vim"
 
 var lsp_texlab = {
     filetype: ['tex'],
-    path: '/usr/bin/texlab'
+    path: 'texlab'
 }
 
 var lsp_vimls = {
     filetype: ['vim'],
-    path: '/usr/bin/vim-language-server',
+    path: 'vim-language-server',
     args: ['--stdio'],
     initializationOptions: {
         diagnostic: {
