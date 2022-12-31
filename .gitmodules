@@ -1,3 +1,6 @@
 [submodule "theme/ayu-vim"]
 	path = theme/ayu-vim
 	url = https://github.com/ayu-theme/ayu-vim.git
+[submodule "lighttree2"]
+	path = lighttree2
+	url = https://github.com/NiYanhhhhh/lighttree2.git
