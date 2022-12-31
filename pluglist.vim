@@ -11,7 +11,7 @@ Plug 'skywind3000/gutentags_plus'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim'
-Plug g:plug_home.'/lighttree2'
+Plug g:home.'/lighttree2'
 "lsp
 Plug 'yegappan/lsp', {'on': []}
 Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}

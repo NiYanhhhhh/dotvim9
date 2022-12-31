@@ -56,7 +56,7 @@ function! s:git()
         return ''
     endif
 
-    if !exists('gitbranch#name')
+    if !exists('*gitbranch#name')
         return ''
     endif
 
