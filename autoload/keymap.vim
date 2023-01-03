@@ -107,16 +107,15 @@ endfunction
 function! keymap#coc() abort
     nnoremap <leader>lh <cmd>call CocActionAsync("doHover")<cr>
     nnoremap <leader>r <cmd>call CocActionAsync("rename")<cr>
-    nnoremap <leader>dl <cmd>LspDiagCurrent<cr>
-    nnoremap <leader>ds <cmd>LspDiagShow<cr>
-    nnoremap <leader>dN <cmd>LspDiagPrev<cr>
-    nnoremap <leader>dn <cmd>LspDiagNext<cr>
-    nnoremap <c-s> <cmd>LspShowSignature<cr>
-    inoremap <c-s> <cmd>LspShowSignature<cr>
-    nnoremap <leader>da <cmd>LspCodeAction<cr>
-    nnoremap gd <cmd>LspGotoDefinition<CR>
-    nnoremap gD <cmd>LspGotoDeclaration<CR>
-    nnoremap <leader>li <cmd>LspPeekImpl<CR>
-    nnoremap <leader>lr <cmd>LspPeekReferences<CR>
-    nnoremap <leader>ld <cmd>LspPeekDefinition<CR>
+    nnoremap <leader>dl <cmd>call CocAction('diagnosticInfo')<cr>
+    nnoremap <leader>ds <cmd>CocList diagnostics<cr>
+    nnoremap <leader>dN <Plug>(coc-diagnostic-prev)
+    nnoremap <leader>dn <Plug>(coc-diagnostic-next)
+    nnoremap <c-s> <cmd>call CocAction("showSignatureHelp")<cr>
+    inoremap <c-s> <cmd>call CocAction("showSignatureHelp")<cr>
+    nnoremap <leader>da <Plug>(coc-codeaction-line)
+    nnoremap gd <Plug>(coc-definition)
+    nnoremap gD <Plug>(coc-declaration)
+    nnoremap <leader>li <Plug>(coc-implementation)
+    nnoremap <leader>lr <Plug>(coc-references)
 endfunction

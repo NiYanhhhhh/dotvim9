@@ -15,6 +15,10 @@ Plug g:home.'/lighttree2'
 "lsp
 Plug 'yegappan/lsp', {'on': []}
 Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}
+" -coc- "
+if g:complete_frame == 'coc'
+    Plug 'neoclide/coc-neco'
+endif
 
 " --others-- "
 if !g:vimtex_loaded

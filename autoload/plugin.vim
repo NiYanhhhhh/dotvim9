@@ -27,6 +27,7 @@ function! plugin#vimtex_setup() abort
 endfunction
 
 function! s:ultisnips() abort
+    call plug#load('ultisnips')
     let g:UltiSnipsExpandTrigger = "\<c-y>"
     let g:UltiSnipsEditSplit = "vertical"
     let g:UltiSnipsJumpForwardTrigger = "<c-j>"
