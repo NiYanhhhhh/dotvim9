@@ -79,6 +79,10 @@ def MatchPattern(s: string): bool
 enddef
 
 export def Init()
+    if g:autopairs != 'autopairs'
+        return
+    endif
+
     g:autopair_enable = 1
 
     for pair in g:autopair

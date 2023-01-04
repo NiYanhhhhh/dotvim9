@@ -13,12 +13,6 @@ export def Nu()
     endif
 enddef
 
-# --root finder-- #
-export def Root(path: string)
-    var pattern = g:root_pattern
-    var root = getbufvar('%', 'rootDir')
-enddef
-
 export def Form(str, indent = 0)
     var t = type(str)
     if t == v:list

@@ -8,15 +8,28 @@ let g:mapleader = "\<Space>"
 let g:snips_frame = 'ultisnips'
 let g:complete_frame = 'coc'
 let g:tree_frame = 'netwr'
-let g:color_set = 'delek'
+let g:autopairs = 'autopairs'
+"let g:color_set = 'delek'
+let g:color_set = 'ayu'
 let g:root_pattern = ['.root', '.vimproject']
 
 let g:terminal_height = 12
 
-let g:gutentags_define_advanced_commands = 1
-
 " --special-- "
-let g:vimtex_loaded = 0 "set to 1 to disable vimtex
+let g:gutentags_define_advanced_commands = 1
+let g:coc_language_extensions = 1
+let g:use_vimtex = 1
+
+if has('nvim')
+    if g:complete_frame == 'lsp'
+        let g:complete_frame = 'coc'
+    endif
+endif
+
+if g:complete_frame == 'coc'
+    let g:autopairs = 'coc-pairs'
+    let g:tree_frame = 'coc-explorer'
+endif
 
 """ PLUGINS """
 """""""""""""""
@@ -34,13 +47,19 @@ if g:complete_frame == 'lsp'
     call plug#load('lsp')
     call lsp#LspSetup()
     call LspOptionsSet(lsp_opt)
-elseif g:complete_frame == 'coc'
+endif
+
+if g:complete_frame == 'coc'
     call plug#load('coc.nvim')
-    call coc#Setup()
+    call plugin#coc_setup()
+else
 endif
 
 "my own plugins
-call autopair#Init()
+if has('nvim')
+else
+    call autopair#Init()
+endif
 
 
 """ KEYMAPS """

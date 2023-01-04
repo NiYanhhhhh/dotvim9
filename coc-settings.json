@@ -5,5 +5,13 @@
   "suggest.removeDuplicateItems": false,
   "[vim]": {
     "diagnostic.enable": false
+  },
+  "explorer.keyMappings.global": {
+    "<cr>": [
+      "wait",
+      "expandable?",
+      ["expanded?", "collapse", "expand"],
+      "open"
+    ]
   }
 }

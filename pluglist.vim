@@ -11,17 +11,18 @@ Plug 'skywind3000/gutentags_plus'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim'
+Plug 'Yggdroot/LeaderF', {'on': []}
 Plug g:home.'/lighttree2'
 "lsp
 Plug 'yegappan/lsp', {'on': []}
 Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}
 " -coc- "
 if g:complete_frame == 'coc'
-    Plug 'neoclide/coc-neco'
+    Plug 'neoclide/coc-neco', {'for': 'vim'}
 endif
 
 " --others-- "
-if !g:vimtex_loaded
+if g:use_vimtex
     Plug 'lervag/vimtex', {'for': 'tex'}
 endif
 

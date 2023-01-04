@@ -51,6 +51,27 @@ function! keymap#shouldindent() abort
     endif
 endfunction
 
+function! keymap#confirm() abort
+    if g:complete_frame == 'coc'
+        if coc#pum#visible()
+            if coc#pum#info()['index'] < 0
+                call coc#pum#cancel()
+            else
+                return coc#pum#confirm()
+            endif
+        endif
+    else
+    endif
+
+    if g:snips_frame == 'ultisnips'
+        if UltiSnips#CanExpandSnippet()
+            return "\<cmd>call UltiSnips#ExpandSnippet()\<cr>"
+        endif
+    endif
+
+    return "\<c-y>"
+endfunction
+
 function! keymap#getindent() abort
     let length = cindent('.') - col('.') + 1
     return repeat(' ', length)
@@ -118,4 +139,18 @@ function! keymap#coc() abort
     nnoremap gD <Plug>(coc-declaration)
     nnoremap <leader>li <Plug>(coc-implementation)
     nnoremap <leader>lr <Plug>(coc-references)
+endfunction
+
+function! keymap#tree_toggle() abort
+    if g:tree_frame == 'coc-explorer'
+        CocCommand explorer
+    else
+        Explore
+    endif
+endfunction
+
+function! keymap#tree_focus() abort
+    if g:tree_frame == 'coc-explorer'
+    else
+    endif
 endfunction

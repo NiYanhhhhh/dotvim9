@@ -38,6 +38,7 @@ inoremap <expr> <tab> pumvisible() ? "\<C-n>" :
             \ keymap#shouldindent() ? keymap#getindent() : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 nnoremap <expr> 0 keymap#gotofirst()
+inoremap <silent> <expr> <c-y> keymap#confirm()
 
 nnoremap <m-w> <cmd>call keymap#win_oprate()<cr>
 inoremap <m-w> <cmd>call keymap#win_oprate()<cr>
@@ -57,3 +58,7 @@ nnoremap <silent> \rg :AsyncTask grep<cr>
 
 " --search-- "
 vnoremap <silent> # "ay/<c-r>a<cr>
+
+" --file explorer-- "
+nnoremap <F3> <cmd>call keymap#tree_toggle()<cr>
+nnoremap <leader><F3> <cmd>call keymap#tree_focus()<cr>

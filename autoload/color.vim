@@ -4,6 +4,7 @@ function! s:common()
     hi StatusLineError ctermfg=1 guifg=Red guibg=#c2bfa5
     hi StatusLineWarn ctermfg=3 guifg=Orange guibg=#c2bfa5
     hi StatusLineHint ctermfg=7 guifg=LightGrey guibg=#c2bfa5
+    hi CocHighlightText gui=underline cterm=reverse
 endfunction
 
 function! s:default()
