@@ -18,10 +18,10 @@ function! plugin#basic_setup() abort
 endfunction
 
 function! plugin#vimtex_setup() abort
-    if g:vimtex_loaded
+    if g:use_vimtex
         return
     endif
-    let g:vimtex_loaded = 1
+    let g:use_vimtex = 1
 
     let g:vimtex_view_method = 'zathura'
     let g:vimtex_complete_enabled = 1
@@ -72,6 +72,7 @@ function! s:commentary() abort
 endfunction
 
 function! s:leaderf() abort
+    call plug#load('LeaderF')
     let g:Lf_WindowPosition = 'popup'
     let g:Lf_PreviewInPopup = 1
     let g:Lf_ShortcutF = "<leader>ff"

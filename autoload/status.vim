@@ -20,8 +20,9 @@ endfunction
 function! s:diagnostic()
     let b:lsp_diagnostic_info = get(b:, 'lsp_diagnostic_info', {'error': 0, 'warning': 0, 'information': 0, 'hint': 0})
     if exists('b:coc_diagnostic_info')
-        let b:lsp_diagnostic_info = b:coc_diagnostic_info'
+        let b:lsp_diagnostic_info = b:coc_diagnostic_info
     endif
+    call filter(b:lsp_diagnostic_info, 'type(v:val) == v:t_number')
 
     let counts = 0
     for val in values(b:lsp_diagnostic_info)
@@ -31,13 +32,14 @@ function! s:diagnostic()
         return "%#StatusLineOk#2B, or not 2B%*"
     endif
 
-    let infomation = "%#StatusLineInfo#"
+    let information = "%#StatusLineInfo#"
     let error = "%#StatusLineError#"
     let warning = "%#StatusLineWarn#"
     let hint = "%#StatusLineHint#"
     let diag = ""
     for [key, val] in items(b:lsp_diagnostic_info)
-        diag .= {key} .. val <= 4 ? repeat("#", val) : printf("[%d]", val)
+        let diag .= {key}
+        let diag .= val <= 4 ? repeat("#", val) : printf("[%d]", val)
     endfor
     let diag .= "%*"
     return diag
