@@ -1,9 +1,9 @@
 function! s:common()
-    hi StatusLineOk cterm=bold ctermfg=121 gui=bold guifg=DarkGreen guibg=#c2bfa5
-    hi StatusLineInfo ctermfg=4 guifg=LightBlue guibg=#c2bfa5
-    hi StatusLineError ctermfg=1 guifg=Red guibg=#c2bfa5
-    hi StatusLineWarn ctermfg=3 guifg=Orange guibg=#c2bfa5
-    hi StatusLineHint ctermfg=7 guifg=LightGrey guibg=#c2bfa5
+    hi default link StatusLineOk vimSpecial
+    hi default link StatusLineInfo vimSpecial
+    hi default link StatusLineError vimError
+    hi default link StatusLineWarn vimWarn
+    hi default link StatusLineHint vimFold
     hi CocHighlightText gui=underline cterm=reverse
 endfunction
 
@@ -20,6 +20,11 @@ function! s:ayu()
         hi link FloatBorder Type
         hi! StatusLine guifg=White guibg=Black
         hi! StatusLineNC guifg=White guibg=Gray
+        hi! StatusLineOk cterm=bold ctermfg=121 gui=bold guifg=LightGreen guibg=Black
+        hi! StatusLineInfo ctermfg=4 guifg=LightBlue guibg=Black
+        hi! StatusLineError ctermfg=1 guifg=Red      guibg=Black
+        hi! StatusLineWarn ctermfg=3 guifg=Orange    guibg=Black
+        hi! StatusLineHint ctermfg=7 guifg=LightGrey guibg=Black
     else
         hi! VertSplit guifg=#263651
     endif

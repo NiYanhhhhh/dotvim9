@@ -11,7 +11,7 @@ let g:tree_frame = 'netwr'
 let g:autopairs = 'autopairs'
 "let g:color_set = 'delek'
 let g:color_set = 'ayu'
-let g:root_pattern = ['.root', '.vimproject']
+let g:root_pattern = ['.git', '.root', '.vimproject']
 
 let g:terminal_height = 12
 

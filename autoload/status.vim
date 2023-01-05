@@ -1,45 +1,44 @@
-function! status#get() abort
+let g:status_broken = 'fine'
+
+function! status#get()
     let start_part = s:start_part()
     let s_pos = " %12(%l/%{line('$')}:%c%V%)  %p%%"
-    " TODO: This 2 terms are broken
-    let s_lsp_diagnostic = '' "s:diagnostic()
-    let s_git = s:git()
-    let s_line = start_part . "%<%=" . s_lsp_diagnostic . s_pos . s_git
+    " TODO: This 2 terms may broken
+    let s_line = ''
+    if g:status_broken == 'fine'
+        let s_lsp_diagnostic = s:try(function('s:diagnostic'), "Diagnostic is broken!")
+        let s_git = s:try(function('s:git'), "Git is broken!")
+
+        let s_line = start_part . "%<%=" . s_lsp_diagnostic . s_pos . s_git
+    else
+        return start_part . "%<%=%#Error#Oops! " . g:status_broken . "%*" . s_pos
+    endif
 
     return s_line
 endfunction
 
 function! s:diagnostic()
-    if !exists('b:lsp_error_counts')
-        let b:lsp_error_counts = 0
+    let b:lsp_diagnostic_info = get(b:, 'lsp_diagnostic_info', {'error': 0, 'warning': 0, 'information': 0, 'hint': 0})
+    if exists('b:coc_diagnostic_info')
+        let b:lsp_diagnostic_info = b:coc_diagnostic_info'
     endif
-    if !exists('b:lsp_warn_counts')
-        let b:lsp_warn_counts = 0
-    endif
-    if !exists('b:lsp_info_counts')
-        let b:lsp_info_counts = 0
-    endif
-    if !exists('b:lsp_hint_counts')
-        let b:lsp_hint_counts = 0
-    endif
-    let counts = b:lsp_hint_counts + b:lsp_info_counts + b:lsp_warn_counts + b:lsp_error_counts
+
+    let counts = 0
+    for val in values(b:lsp_diagnostic_info)
+        let counts += val
+    endfor
     if counts == 0
         return "%#StatusLineOk#2B, or not 2B%*"
     endif
 
-    let info = "%#StatusLineInfo#"
+    let infomation = "%#StatusLineInfo#"
     let error = "%#StatusLineError#"
-    let warn = "%#StatusLineWarn#"
+    let warning = "%#StatusLineWarn#"
     let hint = "%#StatusLineHint#"
     let diag = ""
-    let diag .= error
-    let diag .= b:lsp_error_counts <= 4 ? repeat("#", b:lsp_error_counts) : printf("[%d]", b:lsp_error_counts)
-    let diag .= warn
-    let diag .= b:lsp_warn_counts <= 4 ? repeat("#", b:lsp_warn_counts) : printf("[%d]", b:lsp_warn_counts)
-    let diag .= info
-    let diag .= b:lsp_info_counts <= 4 ? repeat("#", b:lsp_info_counts) : printf("[%d]", b:lsp_info_counts)
-    let diag .= hint
-    let diag .= b:lsp_hint_counts <= 4 ? repeat("#", b:lsp_hint_counts) : printf("[%d]", b:lsp_hint_counts)
+    for [key, val] in items(b:lsp_diagnostic_info)
+        diag .= {key} .. val <= 4 ? repeat("#", val) : printf("[%d]", val)
+    endfor
     let diag .= "%*"
     return diag
 endfunction
@@ -69,6 +68,21 @@ function! s:git()
     return branch
 endfunction
 
-function! status#setup() abort
+function! status#setup()
     set statusline=%!status#get()
+endfunction
+
+function! s:try(func, result)
+    let val = ''
+    try
+        let val = a:func()
+    catch /.*/
+        let g:status_broken = a:result
+        echohl Error
+        echom v:throwpoint
+        echom v:exception
+        echohl None
+    endtry
+
+    return val
 endfunction
