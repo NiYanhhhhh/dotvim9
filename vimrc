@@ -8,7 +8,7 @@ let g:mapleader = "\<Space>"
 let g:snips_frame = 'ultisnips'
 let g:complete_frame = 'coc'
 let g:tree_frame = 'netwr'
-let g:autopairs = 'autopairs'
+let g:autopairs = 'nvim-autopairs'
 "let g:color_set = 'delek'
 let g:color_set = 'ayu'
 let g:root_pattern = ['.git', '.root', '.vimproject']
@@ -18,7 +18,7 @@ let g:terminal_height = 12
 " --special-- "
 let g:gutentags_define_advanced_commands = 1
 let g:coc_language_extensions = 1
-let g:use_vimtex = 1
+let g:use_vimtex = 0
 
 if has('nvim')
     if g:complete_frame == 'lsp'
@@ -27,8 +27,17 @@ if has('nvim')
 endif
 
 if g:complete_frame == 'coc'
-    let g:autopairs = 'coc-pairs'
+    if has('nvim') && g:autopairs == 'autopairs'
+        let g:autopairs = 'coc-pairs'
+    endif
     let g:tree_frame = 'coc-explorer'
+endif
+
+if !has('nvim')
+    let nvim_autopair_frames = ['nvim-autopairs', 'coc-pairs']
+    if index(nvim_autopair_frames, g:autopairs) >= 0
+        let g:autopairs = 'autopairs'
+    endif
 endif
 
 """ PLUGINS """
@@ -53,12 +62,6 @@ if g:complete_frame == 'coc'
     call plug#load('coc.nvim')
     call plugin#coc_setup()
 else
-endif
-
-"my own plugins
-if has('nvim')
-else
-    call autopair#Init()
 endif
 
 

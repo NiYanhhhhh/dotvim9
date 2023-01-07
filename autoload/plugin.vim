@@ -1,3 +1,5 @@
+let s:plugin_autopair_loaded = 0
+
 function! plugin#basic_setup() abort
     " fcitx.vim
     let g:fcitx5_remote = '/usr/bin/fcitx5-remote'
@@ -15,6 +17,10 @@ function! plugin#basic_setup() abort
 
     "Leaderf
     call s:leaderf()
+
+    "autopair plugin
+    " call plugin#autopair()
+    " au InsertEnter call plugin#autopair()
 endfunction
 
 function! plugin#vimtex_setup() abort
@@ -34,7 +40,7 @@ function! plugin#coc_setup() abort
     " let g:coc_config_home = '~/.vim/coc-settings.json'
 
 	let g:coc_global_extensions = ['coc-json', 'coc-marketplace',
-                \ 'coc-pairs', 'coc-vimlsp', 'coc-explorer', 'coc-snippets']
+                \ 'coc-vimlsp', 'coc-explorer', 'coc-snippets']
     if g:coc_language_extensions
         let g:coc_global_extensions += ['coc-jedi', 'coc-java', 'coc-texlab',
                     \ 'coc-clangd', 'coc-sumneko-lua', 'coc-cmake']
@@ -44,7 +50,7 @@ endfunction
 
 function! s:ultisnips() abort
     call plug#load('ultisnips')
-    " let g:UltiSnipsExpandTrigger = "<c-y>"
+    let g:UltiSnipsExpandTrigger = "<c-y>"
     let g:UltiSnipsEditSplit = "vertical"
     let g:UltiSnipsJumpForwardTrigger = "<c-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
@@ -73,19 +79,37 @@ endfunction
 
 function! s:leaderf() abort
     call plug#load('LeaderF')
-    let g:Lf_WindowPosition = 'popup'
+    let g:Lf_WindowHeight = 0.3
+    " let g:Lf_WindowPosition = 'popup'
     let g:Lf_PreviewInPopup = 1
-    let g:Lf_ShortcutF = "<leader>ff"
-    let g:Lf_ShortcutB = "<leader>bu"
+    let g:Lf_PreviewHorizontalPosition = 'cursor'
+    let g:Lf_PopupHeight = 0.35
     let g:Lf_CommandMap = {
                 \   '<c-X>': ['<c-s>'],
                 \   '<c-]>': ['<c-i>'],
                 \   '<c-j>': ['<c-j>', '<Tab>'],
                 \   '<c-k>': ['<c-k>', '<s-Tab>'],
                 \ }
-    noremap <leader>fu :LeaderfFunction<CR>
-    noremap <leader>fb :LeaderfBufTag<CR>
-    noremap <leader>fw :LeaderfBufTagCword<CR>
-    noremap <leader>ft :Leaderf --nowrap task<CR>
-    noremap <leader>fj :Leaderf tag<CR>
+    nnoremap <leader>fu <cmd>Leaderf function<cr>
+    nnoremap <leader>fb <cmd>Leaderf bufTag<cr>
+    nnoremap <leader>ft <cmd>Leaderf tag<cr>
+    nnoremap <leader>ff <cmd>Leaderf file<cr>
+    nnoremap <leader>fw <cmd>LeaderfBufTagCword<cr>
+endfunction
+
+function! plugin#autopair() abort
+    if s:plugin_autopair_loaded == 1
+        return
+    endif
+    let s:plugin_autopair_loaded = 1
+
+    if has('nvim')
+        if g:autopairs == 'nvim-autopairs'
+            call plug#load('nvim-autopairs')
+            lua require "autopair_setup".setup()
+        endif
+        " fall back to coc-pairs
+    else
+        if g:autopairs == 'autopairs' | call autopair#Init() | endif
+    endif
 endfunction

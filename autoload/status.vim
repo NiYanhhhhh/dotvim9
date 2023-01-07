@@ -17,6 +17,10 @@ function! status#get()
     return s_line
 endfunction
 
+function! status#getNc() abort
+    return s:start_part() .. "%<%=" .. "%*" .. " %12(%l/%{line('$')}:%c%V%)  %p%%"
+endfunction
+
 function! s:diagnostic()
     let b:lsp_diagnostic_info = get(b:, 'lsp_diagnostic_info', {'error': 0, 'warning': 0, 'information': 0, 'hint': 0})
     if exists('b:coc_diagnostic_info')
@@ -71,7 +75,7 @@ function! s:git()
 endfunction
 
 function! status#setup()
-    set statusline=%!status#get()
+    set statusline=%{%bufnr()==g:actual_curbuf?status#get():status#getNc()%}
 endfunction
 
 function! s:try(func, result)

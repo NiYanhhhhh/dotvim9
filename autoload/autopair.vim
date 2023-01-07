@@ -1,7 +1,7 @@
 vim9script
 
 g:autopair_debug = 1
-g:autopair_enable = 1
+g:autopair_enable = 0
 g:autopair = [
     '(c)',
     '[c]',
@@ -26,6 +26,7 @@ def ReplaceSpecial(s: string): string
 enddef
 
 export def PairMap(s: string)
+    # echom "PairMap"
     var open = split(s, 'c')[0]
     var close = split(s, 'c')[1]
     var key = open
@@ -79,10 +80,17 @@ def MatchPattern(s: string): bool
 enddef
 
 export def Init()
+    # echom "autopair init!"
     if g:autopairs != 'autopairs'
         return
     endif
+    if g:autopair_enable == 1
+        return
+    endif
 
+    if exists('*CocAction')
+        g:CocAction('deactivateExtension', 'coc-pairs')
+    endif
     g:autopair_enable = 1
 
     for pair in g:autopair

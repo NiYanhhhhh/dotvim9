@@ -11,3 +11,7 @@ autocmd InsertEnter * call event#start_fcitx()
 " --CursorMoved event-- "
 autocmd CursorMoved * call event#on_cursor_moved()
 
+" --coc init events-- "
+if g:complete_frame == 'coc'
+    autocmd User CocNvimInit call event#on_coc_init()
+endif

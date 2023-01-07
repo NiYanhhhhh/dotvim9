@@ -48,7 +48,10 @@ vnoremap <m-w> <cmd>call keymap#win_oprate()<cr>
 nnoremap <leader>t <cmd>vim /TODO/j **/*.* \| copen<cr>
 
 " --terminal-- "
-nnoremap \te <cmd>terminal<CR>
+if has('nvim')
+else
+    nnoremap \te <cmd>terminal<CR>
+endif
 tnoremap <Esc> <C-\><C-n>
 
 " --quickfix-- "

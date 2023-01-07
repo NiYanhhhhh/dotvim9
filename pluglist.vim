@@ -13,6 +13,9 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim'
 Plug 'Yggdroot/LeaderF', {'on': []}
 Plug g:home.'/lighttree2'
+if has('nvim')
+    Plug 'windwp/nvim-autopairs', {'on': []}
+endif
 "lsp
 Plug 'yegappan/lsp', {'on': []}
 Plug 'neoclide/coc.nvim', {'on': [], 'branch': 'release'}

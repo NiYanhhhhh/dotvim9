@@ -1,5 +1,6 @@
 function! event#on_insert_enter() abort
     set norelativenumber
+    call plugin#autopair()
 endfunction
 
 function! event#on_insert_leave() abort
@@ -36,4 +37,10 @@ function! event#on_cursor_moved() abort
         let g:nu_load = 0
     endif
 
+endfunction
+
+function! event#on_coc_init() abort
+    if g:autopairs != 'coc-autopairs'
+        call CocAction('deactivateExtension', 'coc-pairs')
+    endif
 endfunction
