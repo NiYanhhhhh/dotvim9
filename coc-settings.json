@@ -5,7 +5,7 @@
   "suggest.removeDuplicateItems": false,
   "signature.hideOnTextChange": true,
   "[vim]": {
-    "diagnostic.enable": false
+    "diagnostic.enable": true
   },
   "explorer.keyMappings.global": {
     "<cr>": [
@@ -24,5 +24,17 @@
       "open"
     ]
   },
-  "Lua.telemetry.enable": true
+  "Lua.telemetry.enable": true,
+  "java.templates.fileHeader": [
+    "/**",
+    " * ${type_name}",
+    " * @author ${user}",
+    " */"
+  ],
+  "java.templates.typeComment": [
+    "/**",
+    " * ${type_name}",
+    " * @author ${user}",
+    " */"
+  ]
 }

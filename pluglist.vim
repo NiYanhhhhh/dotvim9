@@ -12,6 +12,7 @@ Plug 'tpope/vim-commentary'
 Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim'
 Plug 'Yggdroot/LeaderF', {'on': []}
+Plug 'ianva/vim-youdao-translater', {'on': ['Ydc', 'Ydv', 'Yde']}
 Plug g:home.'/lighttree2'
 if has('nvim')
     Plug 'windwp/nvim-autopairs', {'on': []}

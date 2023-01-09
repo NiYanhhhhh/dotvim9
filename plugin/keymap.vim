@@ -49,6 +49,7 @@ nnoremap <leader>t <cmd>vim /TODO/j **/*.* \| copen<cr>
 
 " --terminal-- "
 if has('nvim')
+    nnoremap \te <cmd>15split\|terminal<cr>i
 else
     nnoremap \te <cmd>terminal<CR>
 endif

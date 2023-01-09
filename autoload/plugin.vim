@@ -18,6 +18,9 @@ function! plugin#basic_setup() abort
     "Leaderf
     call s:leaderf()
 
+    "youdao translate
+    call s:yd_translate()
+
     "autopair plugin
     " call plugin#autopair()
     " au InsertEnter call plugin#autopair()
@@ -112,4 +115,10 @@ function! plugin#autopair() abort
     else
         if g:autopairs == 'autopairs' | call autopair#Init() | endif
     endif
+endfunction
+
+function! s:yd_translate() abort
+    nnoremap <silent> <c-t> <cmd>Ydc<cr>
+    vnoremap <silent> <c-t> <cmd>Ydv<cr>
+    nnoremap <silent> \yd <cmd>Yde<cr>
 endfunction
