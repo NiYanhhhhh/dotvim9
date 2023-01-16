@@ -1,3 +1,18 @@
+if !has('vim9script')
+    function! util#Nu() abort
+        if g:nu_load
+            set nonumber
+            set norelativenumber
+            let g:nu_load = 0
+        else
+            set number
+            set relativenumber
+            let g:nu_load = 1
+        endif
+    endfunction
+    finish
+endif
+
 vim9script
 
 # --number settings-- #
