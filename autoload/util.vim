@@ -28,7 +28,7 @@ export def Nu()
     endif
 enddef
 
-export def Form(str, indent = 0)
+export def Form(str: any, indent = 0)
     var t = type(str)
     if t == v:list
         echom repeat(' ', indent) .. "["

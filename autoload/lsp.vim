@@ -13,7 +13,7 @@ var lsp_vimls = {
     args: ['--stdio'],
     initializationOptions: {
         diagnostic: {
-            enable: v:false
+            enable: v:true
         },
         indexes: {
             runtimepath: true,
