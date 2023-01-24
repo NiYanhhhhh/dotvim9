@@ -9,6 +9,11 @@ function! plugin#basic_setup() abort
         call s:ultisnips()
     endif
 
+    "surround
+    if g:use_surround
+        call s:surround()
+    endif
+
     "gutentags
     call s:gutentags()
 
@@ -52,11 +57,11 @@ function! plugin#coc_setup() abort
 endfunction
 
 function! s:ultisnips() abort
-    call plug#load('ultisnips')
     let g:UltiSnipsExpandTrigger = "<c-y>"
     let g:UltiSnipsEditSplit = "vertical"
     let g:UltiSnipsJumpForwardTrigger = "<c-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+    call plug#load('ultisnips')
 endfunction
 
 function! s:gutentags() abort
@@ -121,4 +126,8 @@ function! s:yd_translate() abort
     nnoremap <silent> <c-t> <cmd>Ydc<cr>
     vnoremap <silent> <c-t> <cmd>Ydv<cr>
     nnoremap <silent> \yd <cmd>Yde<cr>
+endfunction
+
+function! s:surround() abort
+    let g:surround_no_mappings = 1
 endfunction

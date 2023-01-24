@@ -19,6 +19,7 @@ let g:terminal_height = 12
 let g:gutentags_define_advanced_commands = 1
 let g:coc_language_extensions = 1
 let g:use_vimtex = 0
+let g:use_surround = 0
 
 if has('nvim')
     if g:complete_frame == 'lsp'

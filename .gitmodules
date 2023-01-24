@@ -4,3 +4,6 @@
 [submodule "lighttree2"]
 	path = lighttree2
 	url = git@github.com:NiYanhhhhh/lighttree2.git
+[submodule "surround"]
+	path = surround
+	url = https://tpope.io/vim/surround.git

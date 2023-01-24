@@ -1,9 +1,10 @@
 call plug#begin(g:home.'/plugged')
 
 " --themes-- "
-Plug 'ayu-theme/ayu-vim', {'on': [], 'dir': g:home.'/theme/ayu-vim'}
+Plug 'ayu-theme/ayu-vim', {'on': [], 'dir': g:home..'/theme/ayu-vim'}
 
 " --tools-- "
+Plug 'tpope/surround', {'on': [], 'dir': g:home..'/surround'}
 Plug 'lilydjwg/fcitx.vim', {'on': []}
 Plug 'SirVer/ultisnips', {'on': []}
 Plug 'ludovicchabant/vim-gutentags'
@@ -13,7 +14,8 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim'
 Plug 'Yggdroot/LeaderF', {'on': []}
 Plug 'ianva/vim-youdao-translater', {'on': ['Ydc', 'Ydv', 'Yde']}
-Plug g:home.'/lighttree2'
+Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
+Plug g:home..'/lighttree2'
 if has('nvim')
     Plug 'windwp/nvim-autopairs', {'on': []}
 endif
