@@ -88,9 +88,6 @@ export def Init()
         return
     endif
 
-    if exists('*CocAction')
-        g:CocAction('deactivateExtension', 'coc-pairs')
-    endif
     g:autopair_enable = 1
 
     for pair in g:autopair

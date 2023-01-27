@@ -138,6 +138,11 @@ let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
+"gui front settings
+set guifont=Consolas:h11
+if exists('g:neovide')
+endif
+
 
 
 """ APPEARANCE """
