@@ -11,11 +11,11 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/vim-gitbranch'
-Plug 'Shougo/neco-vim'
-Plug 'Yggdroot/LeaderF', {'on': []}
+Plug 'Shougo/neco-vim', {'for': 'vim'}
+Plug 'Yggdroot/LeaderF', {'on': ['Leaderf', 'LeaderfBufTagCword']}
 Plug 'ianva/vim-youdao-translater', {'on': ['Ydc', 'Ydv', 'Yde']}
 Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
-Plug g:home..'/lighttree2'
+Plug g:home..'/lighttree2', {'on': []}
 if has('nvim')
     Plug 'windwp/nvim-autopairs', {'on': []}
 endif

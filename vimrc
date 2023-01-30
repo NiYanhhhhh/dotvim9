@@ -6,7 +6,7 @@ let g:fcitx_load = 0
 let g:nu_load = 0
 let g:mapleader = "\<Space>"
 let g:snips_frame = 'ultisnips'
-let g:complete_frame = 'lsp'
+let g:complete_frame = 'coc'
 let g:tree_frame = 'netwr'
 let g:autopairs = 'nvim-autopairs'
 "let g:color_set = 'delek'
@@ -20,6 +20,8 @@ let g:gutentags_define_advanced_commands = 1
 let g:coc_language_extensions = 1
 let g:use_vimtex = 0
 let g:use_surround = 0
+let g:insert_entered = 0
+let g:bufreaded = 0
 
 if has('nvim')
     if g:complete_frame == 'lsp'
@@ -48,22 +50,7 @@ call plugin#basic_setup()
 au Filetype tex call plugin#vimtex_setup()
 
 " --lsp-- "
-if g:complete_frame == 'lsp'
-    let lsp_opt = {
-                \   "showInlayHints": v:true,
-                \   "usePopupInCodeAction": v:true,
-                \   "showSignature": v:false
-                \ }
-    call plug#load('lsp')
-    call lsp#LspSetup()
-    call LspOptionsSet(lsp_opt)
-endif
-
-if g:complete_frame == 'coc'
-    call plug#load('coc.nvim')
-    call plugin#coc_setup()
-else
-endif
+"settings are in function plugin#lsp_init()
 
 
 """ KEYMAPS """
@@ -141,7 +128,12 @@ let &t_EI = "\<Esc>[2 q"
 "gui front settings
 set guifont=Consolas:h11
 if exists('g:neovide')
+    let g:neovide_cursor_trail_size = 0.0
 endif
+
+"python
+let g:python3_host_prog = '/usr/bin/python3'
+let g:python2_host_prog = '/usr/bin/python3'
 
 
 

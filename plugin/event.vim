@@ -1,6 +1,10 @@
+" --special filetype settings-- "
+au FileType c,cpp,java set mps+==:;
+
 " --keyboard event-- "
 autocmd InsertEnter * call event#on_insert_enter()
 autocmd InsertLeave * call event#on_insert_leave()
+autocmd BufReadPost * call event#on_bufread()
 
 " --quit quickfix when all windows closed-- "
 autocmd BufEnter * if &filetype == 'qf' && winnr('$') < 2 | q | endif

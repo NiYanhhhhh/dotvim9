@@ -17,7 +17,8 @@ nnoremap <silent> <m-h> :vertical resize -1<cr>
 nnoremap <silent> <m-l> :vertical resize +1<cr>
 
 vnoremap <C-c> "+y
-inoremap <C-v> <Esc>"+pa
+inoremap <C-v> <c-r>+
+inoremap <C-S-v> <c-r>+
 
 vnoremap <bs> X
 nnoremap <bs> X

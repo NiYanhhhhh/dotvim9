@@ -4,11 +4,6 @@ function! plugin#basic_setup() abort
     " fcitx.vim
     let g:fcitx5_remote = '/usr/bin/fcitx5-remote'
 
-    "ultisnips
-    if g:snips_frame == 'ultisnips'
-        call s:ultisnips()
-    endif
-
     "surround
     if g:use_surround
         call s:surround()
@@ -86,10 +81,9 @@ function! s:commentary() abort
 endfunction
 
 function! s:leaderf() abort
-    call plug#load('LeaderF')
     let g:Lf_WindowHeight = 0.3
     " let g:Lf_WindowPosition = 'popup'
-    let g:Lf_PreviewInPopup = 1
+    let g:Lf_PreviewInPopup = 0
     let g:Lf_PreviewHorizontalPosition = 'cursor'
     let g:Lf_PopupHeight = 0.35
     let g:Lf_CommandMap = {
@@ -103,6 +97,7 @@ function! s:leaderf() abort
     nnoremap <leader>ft <cmd>Leaderf tag<cr>
     nnoremap <leader>ff <cmd>Leaderf file<cr>
     nnoremap <leader>fw <cmd>LeaderfBufTagCword<cr>
+    nnoremap <leader>fg <cmd>Leaderf rg<cr>
 endfunction
 
 function! plugin#autopair() abort
@@ -119,6 +114,32 @@ function! plugin#autopair() abort
         " fall back to coc-pairs
     else
         if g:autopairs == 'autopairs' | call autopair#Init() | endif
+    endif
+endfunction
+
+function! plugin#lsp_init() abort
+    if g:complete_frame == 'lsp'
+        let lsp_opt = {
+                    \   "showInlayHints": v:true,
+                    \   "usePopupInCodeAction": v:true,
+                    \   "showSignature": v:false
+                    \ }
+        call plug#load('lsp')
+        call lsp#LspSetup()
+        call LspOptionsSet(lsp_opt)
+    endif
+
+    if g:complete_frame == 'coc'
+        call plug#load('coc.nvim')
+        call plugin#coc_setup()
+    else
+    endif
+endfunction
+
+function! plugin#snips_init() abort
+    "ultisnips
+    if g:snips_frame == 'ultisnips'
+        call s:ultisnips()
     endif
 endfunction
 

@@ -1,6 +1,12 @@
 function! event#on_insert_enter() abort
     set norelativenumber
     call plugin#autopair()
+
+    if g:insert_entered
+        return
+    endif
+    let g:insert_entered = 1
+    call plugin#snips_init()
 endfunction
 
 function! event#on_insert_leave() abort
@@ -19,6 +25,14 @@ function! event#on_ui_enter() abort
     call color#setup(g:color_set)
     call status#setup()
     let g:appearance_load = 1
+endfunction
+
+function! event#on_bufread() abort
+    if g:bufreaded
+        return
+    endif
+    let g:bufreaded = 1
+    call plugin#lsp_init()
 endfunction
 
 function! event#start_fcitx() abort
