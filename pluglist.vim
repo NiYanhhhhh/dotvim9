@@ -15,7 +15,7 @@ Plug 'Shougo/neco-vim', {'for': 'vim'}
 Plug 'Yggdroot/LeaderF', {'on': ['Leaderf', 'LeaderfBufTagCword']}
 Plug 'ianva/vim-youdao-translater', {'on': ['Ydc', 'Ydv', 'Yde']}
 Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
-Plug g:home..'/lighttree2', {'on': []}
+Plug g:home..'/lighttree2' ", {'on': []}
 if has('nvim')
     Plug 'windwp/nvim-autopairs', {'on': []}
 endif

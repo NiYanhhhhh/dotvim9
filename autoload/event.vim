@@ -6,7 +6,6 @@ function! event#on_insert_enter() abort
         return
     endif
     let g:insert_entered = 1
-    call plugin#snips_init()
 endfunction
 
 function! event#on_insert_leave() abort
@@ -33,6 +32,7 @@ function! event#on_bufread() abort
     endif
     let g:bufreaded = 1
     call plugin#lsp_init()
+    call plugin#snips_init()
 endfunction
 
 function! event#start_fcitx() abort
@@ -41,7 +41,7 @@ function! event#start_fcitx() abort
     endif
     let g:fcitx_load = 1
 
-    call plug#load('fcitx.vim', 'ultisnips')
+    call plug#load('fcitx.vim')
 endfunction
 
 function! event#on_cursor_moved() abort
