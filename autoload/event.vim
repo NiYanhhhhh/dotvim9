@@ -57,4 +57,8 @@ function! event#on_coc_init() abort
     if g:autopairs != 'coc-autopairs'
         call CocAction('deactivateExtension', 'coc-pairs')
     endif
+
+    if g:use_vimtex
+        call CocAction('deactivateExtension', 'coc-texlab')
+    endif
 endfunction
