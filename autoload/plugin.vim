@@ -27,20 +27,16 @@ function! plugin#basic_setup() abort
 endfunction
 
 function! plugin#vimtex_setup() abort
-    if g:use_vimtex
-        return
-    endif
-    let g:use_vimtex = 1
-
     let g:vimtex_view_method = 'zathura'
+    let g:vimtex_view_general_viewer = 'zathura'
     let g:vimtex_complete_enabled = 1
-    nnoremap <f5> <cmd>VimtexView<cr>
-    nnoremap <f9> <cmd>VimtexCompile<cr>
+    nnoremap <buffer> <f5> <cmd>VimtexView<cr>
+    nnoremap <buffer> <f9> <cmd>VimtexCompile<cr>
 endfunction
 
 function! plugin#coc_setup() abort
     call keymap#coc()
-    " let g:coc_config_home = '~/.vim/coc-settings.json'
+    " let g:coc_config_home = getenv('HOME')..'/.vim/coc-settings.json'
 
 	let g:coc_global_extensions = ['coc-json', 'coc-marketplace',
                 \ 'coc-vimlsp', 'coc-explorer', 'coc-snippets']

@@ -55,7 +55,7 @@ function! keymap#confirm() abort
     if g:complete_frame == 'coc'
         if coc#pum#visible()
             if coc#pum#info()['index'] < 0
-                call coc#pum#cancel()
+                return coc#pum#cancel()
             else
                 return coc#pum#confirm()
             endif
