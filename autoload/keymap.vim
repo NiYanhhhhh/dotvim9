@@ -54,9 +54,7 @@ endfunction
 function! keymap#confirm() abort
     if g:complete_frame == 'coc'
         if coc#pum#visible()
-            if coc#pum#info()['index'] < 0
-                return coc#pum#cancel()
-            else
+            if coc#pum#info()['index'] >= 0
                 return coc#pum#confirm()
             endif
         endif
@@ -144,6 +142,8 @@ endfunction
 function! keymap#tree_toggle() abort
     if g:tree_frame == 'coc-explorer'
         CocCommand explorer
+    elseif g:tree_frame == 'fern'
+        Fern . -drawer -toggle
     else
         Explore
     endif
@@ -153,4 +153,39 @@ function! keymap#tree_focus() abort
     if g:tree_frame == 'coc-explorer'
     else
     endif
+endfunction
+
+function! keymap#insert_mappings() abort
+    imap <expr> <tab> keymap#pumvisible() ? "\<c-n>" :
+                \ keymap#shouldindent() ? keymap#getindent() : "\<TAB>"
+    imap <expr> <S-TAB> keymap#pumvisible() ? "\<c-p>" : "\<s-TAB>"
+    imap <silent> <expr> <c-y> keymap#confirm()
+endfunction
+
+function! keymap#pumvisible() abort
+    if g:complete_frame == 'coc'
+        return coc#pum#visible()
+    else
+        return pumvisible()
+    endif
+endfunction
+
+function! keymap#fern() abort
+    nmap <buffer> <silent> <expr> <cr>
+                \ fern#smart#leaf(
+                \   "\<Plug>(fern-action-open)",
+                \   "\<Plug>(fern-action-expand)",
+                \   "\<Plug>(fern-action-collapse)"
+                \ )
+    nmap <buffer> C <Plug>(fern-action-open-or-expand)
+    nmap <buffer> s <Plug>(fern-action-open:side)
+    nmap <buffer> i <Plug>(fern-action-open:split)
+    nmap <buffer> n <Plug>(fern-action-new-file)
+    nmap <buffer> N <Plug>(fern-action-new-dir)
+    nmap <buffer> y <Plug>(fern-action-clipboard-copy)
+    nmap <buffer> d <Plug>(fern-action-clipboard-move)
+    nmap <buffer> p <Plug>(fern-action-clipboard-paste)
+    nmap <buffer> ! <Plug>(fern-action-hidden)
+    nmap <buffer> q <cmd>q<cr>
+    setlocal signcolumn=auto
 endfunction

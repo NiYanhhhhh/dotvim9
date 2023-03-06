@@ -7,7 +7,7 @@ let g:nu_load = 0
 let g:mapleader = "\<Space>"
 let g:snips_frame = 'ultisnips'
 let g:complete_frame = 'coc'
-let g:tree_frame = 'netwr'
+let g:tree_frame = 'fern'
 let g:autopairs = 'nvim-autopairs'
 "let g:color_set = 'delek'
 let g:color_set = 'ayu'
@@ -27,21 +27,22 @@ if has('nvim')
     if g:complete_frame == 'lsp'
         let g:complete_frame = 'coc'
     endif
+else
+    let nvim_autopair_frames = ['nvim-autopairs', 'coc-pairs']
+    if index(nvim_autopair_frames, g:autopairs) >= 0
+        let g:autopairs = 'autopairs'
+    endif
+    if g:complete_frame == 'cmp'
+        let g:complete_frame = 'lsp'
+    endif
 endif
 
 if g:complete_frame == 'coc'
     if has('nvim') && g:autopairs == 'autopairs'
         let g:autopairs = 'coc-pairs'
     endif
-    let g:tree_frame = 'coc-explorer'
 endif
 
-if !has('nvim')
-    let nvim_autopair_frames = ['nvim-autopairs', 'coc-pairs']
-    if index(nvim_autopair_frames, g:autopairs) >= 0
-        let g:autopairs = 'autopairs'
-    endif
-endif
 
 """ PLUGINS """
 """""""""""""""

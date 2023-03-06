@@ -2,7 +2,7 @@
 au FileType c,cpp,java set mps+==:;
 
 " --keyboard event-- "
-autocmd InsertEnter * call event#on_insert_enter()
+autocmd InsertEnter * ++once call event#on_insert_enter()
 autocmd InsertLeave * call event#on_insert_leave()
 autocmd BufReadPost * call event#on_bufread()
 
@@ -19,3 +19,7 @@ autocmd CursorMoved * call event#on_cursor_moved()
 if g:complete_frame == 'coc'
     autocmd User CocNvimInit call event#on_coc_init()
 endif
+
+" --fern inti-- "
+autocmd FileType fern call keymap#fern()
+

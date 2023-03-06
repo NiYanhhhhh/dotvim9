@@ -2,10 +2,7 @@ function! event#on_insert_enter() abort
     set norelativenumber
     call plugin#autopair()
 
-    if g:insert_entered
-        return
-    endif
-    let g:insert_entered = 1
+    call keymap#insert_mappings()
 endfunction
 
 function! event#on_insert_leave() abort
@@ -59,6 +56,9 @@ function! event#on_coc_init() abort
     endif
 
     if g:use_vimtex
-        call CocAction('deactivateExtension', 'coc-texlab')
+        call CocAction('deactivateExtension')
+    endif
+    if g:tree_frame != 'coc-explorer'
+        call CocAction('deactivateExtension', 'coc-explorer')
     endif
 endfunction

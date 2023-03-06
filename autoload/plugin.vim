@@ -21,6 +21,14 @@ function! plugin#basic_setup() abort
     "youdao translate
     call s:yd_translate()
 
+    "fern (load in bufread event)
+    call plugin#fern()
+
+    "leetcode
+    let g:leetcode_china = 1
+    let g:leetcode_browser = 'firefox'
+    let g:leetcode_solution_filetype = 'c'
+
     "autopair plugin
     " call plugin#autopair()
     " au InsertEnter call plugin#autopair()
@@ -36,7 +44,7 @@ endfunction
 
 function! plugin#coc_setup() abort
     call keymap#coc()
-    " let g:coc_config_home = getenv('HOME')..'/.vim/coc-settings.json'
+    let g:coc_config_home = getenv('HOME')..'/.vim'
 
 	let g:coc_global_extensions = ['coc-json', 'coc-marketplace',
                 \ 'coc-vimlsp', 'coc-explorer', 'coc-snippets']
@@ -48,11 +56,11 @@ function! plugin#coc_setup() abort
 endfunction
 
 function! s:ultisnips() abort
-    let g:UltiSnipsExpandTrigger = "<c-y>"
     let g:UltiSnipsEditSplit = "vertical"
     let g:UltiSnipsJumpForwardTrigger = "<c-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
     call plug#load('ultisnips')
+    vnoremap <silent> <c-y> :call UltiSnips#SaveLastVisualSelection()<CR>gvs
 endfunction
 
 function! s:gutentags() abort
@@ -147,4 +155,20 @@ endfunction
 
 function! s:surround() abort
     let g:surround_no_mappings = 1
+endfunction
+
+function! plugin#fern() abort
+    let g:fern#disable_default_mappings = 1
+
+    let g:fern#renderer#default#root_symbol = "[R]"
+    let g:fern#renderer#default#leaf_symbol = "  "
+    let g:fern#renderer#default#collapsed_symbol = "+ "
+    let g:fern#renderer#default#expanded_symbol = "- "
+    let g:fern#disable_drawer_auto_winfixwidth = 1
+    call plug#load('fern.vim')
+    " call plug#load('fern-git-status.vim')
+
+    hi link FernRootText Statement
+    hi link FernRootSymbol Statement
+    hi link FernBranchText Directory
 endfunction

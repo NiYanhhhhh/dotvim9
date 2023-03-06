@@ -35,11 +35,7 @@ nnoremap <c-l> <cmd>nohlsearch<cr>
 
 " --using function-- "
 inoremap <expr> <c-j> keymap#nextline(0)
-inoremap <expr> <tab> pumvisible() ? "\<C-n>" :
-            \ keymap#shouldindent() ? keymap#getindent() : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 nnoremap <expr> 0 keymap#gotofirst()
-inoremap <silent> <expr> <c-y> keymap#confirm()
 
 nnoremap <m-w> <cmd>call keymap#win_oprate()<cr>
 inoremap <m-w> <cmd>call keymap#win_oprate()<cr>

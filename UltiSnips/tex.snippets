@@ -5,7 +5,7 @@ snippet mc "TexMagic Comment" b
 $0
 endsnippet
 
-snippet "\\?b(egin)?" "begin{} / end{}" brs
+snippet "\\?b(egin)?" "begin{} / end{}" br
 \begin{${1:something}}$2
 	${0:${VISUAL}}
 \end{$1}
@@ -71,7 +71,7 @@ snippet title "info of me" b
 endsnippet
 
 snippet ctset "my \ctexset {...}" b
-\ctexset {
+\ctexset{
 	section/format += \heiti,
 	subsection/format = \large\heiti,
 	subsection/numberformat += \bfseries,
@@ -112,3 +112,50 @@ snippet eqtag "make tag following section"
 \renewcommand\theequation{\arabic{section}-\arabic{equation}}
 endsnippet
 
+snippet paper "documentclass" b
+\documentclass[
+    A4,
+    twoside,
+    AutoFakeBold,
+    fontset=windows,
+    twocolumn
+]{ctexart}
+
+% packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{geometry}
+\usepackage{cite}
+\usepackage{widetext}
+
+% settings
+\geometry{a4paper, top=3.17cm, bottom=3.17cm, left=2.54cm, right=2.54cm}
+\setlength\columnsep{0.66cm}
+\makeatletter
+\@addtoreset{equation}{section}
+\makeatother
+\renewcommand\theequation{\arabic{section}-\arabic{equation}}
+\def\ucite#1{\textsuperscript{\cite{#1}}}
+\def\aver#1{\langle{#1}\rangle}
+% \renewcommand{\thecite}{$^{\cite}$}
+
+% infos
+\title{\heiti\bfseries\zihao{2} ${1:title}}
+\author{\kaishu\zihao{5} ${2:倪彦}}
+\date{${3:\today}}
+
+% =================== Text begin here ==============================
+\begin{document}
+\maketitle
+
+$0
+
+\end{document}
+endsnippet
+
+snippet frame "\begin{frame}\end{frame}" b
+\begin{frame}
+	${VISUAL}$0
+\end{frame}
+endsnippet
