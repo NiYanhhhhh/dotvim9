@@ -14,7 +14,7 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 Plug 'Yggdroot/LeaderF', {'on': ['Leaderf', 'LeaderfBufTagCword']}
 Plug 'ianva/vim-youdao-translater', {'on': ['Ydc', 'Ydv', 'Yde']}
-Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': 'cd app && yarn install'}
 Plug 'mbledkowski/neuleetcode.vim', {'on': ['LeetCodeList', 'LeetCodeTest', 'LeetCodeSubmit', 'LeetCodeSignIn']}
 if g:tree_frame == 'fern'
     Plug 'lambdalisue/fern.vim' , {'on': []}

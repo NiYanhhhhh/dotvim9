@@ -29,6 +29,10 @@ function! plugin#basic_setup() abort
     let g:leetcode_browser = 'firefox'
     let g:leetcode_solution_filetype = 'c'
 
+    "markdown-preview.nvim
+    let g:mkdp_browserfunc = 'markdown#view'
+    let g:mkdp_auto_start = 0
+
     "autopair plugin
     " call plugin#autopair()
     " au InsertEnter call plugin#autopair()
