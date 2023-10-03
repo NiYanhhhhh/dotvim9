@@ -10,7 +10,7 @@ function! plugin#basic_setup() abort
     endif
 
     "gutentags
-    call s:gutentags()
+    " call s:gutentags()
 
     "commentary
     call s:commentary()
@@ -140,7 +140,12 @@ function! plugin#lsp_init() abort
     if g:complete_frame == 'coc'
         call plug#load('coc.nvim')
         call plugin#coc_setup()
-    else
+    endif
+
+    if g:complete_frame == 'cmp'
+        call plug#load(g:cmp_plugins)
+        call plug#load('nvim-lspconfig')
+        call plugin#cmp_setup()
     endif
 endfunction
 
@@ -175,4 +180,8 @@ function! plugin#fern() abort
     hi link FernRootText Statement
     hi link FernRootSymbol Statement
     hi link FernBranchText Directory
+endfunction
+
+function! plugin#cmp_setup() abort
+    lua require"cmp_setup".setup()
 endfunction

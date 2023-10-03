@@ -1,3 +1,3 @@
 function markdown#view(url)
-    call jobstart(['epiphany', a:url])
+    call jobstart(['firefox', '--new-window', a:url])
 endfunction

@@ -7,8 +7,8 @@ Plug 'ayu-theme/ayu-vim', {'on': [], 'dir': g:home..'/theme/ayu-vim'}
 "Plug 'tpope/surround', {'on': [], 'dir': g:home..'/surround'}
 Plug 'lilydjwg/fcitx.vim', {'on': []}
 Plug 'SirVer/ultisnips', {'on': []}
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'skywind3000/gutentags_plus'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/vim-gitbranch'
 Plug 'Shougo/neco-vim', {'for': 'vim'}
@@ -34,6 +34,19 @@ if g:complete_frame == 'coc'
 endif
 " -cmp- "
 if g:complete_frame == 'cmp'
+    Plug 'neovim/nvim-lspconfig', {'on': []}
+    let g:cmp_plugins = ['nvim-cmp', 'cmp-nvim-lsp', 'cmp-buffer', 'cmp-path']
+    if g:snips_frame == 'ultisnips'
+        call add(g:cmp_plugins, 'cmp-nvim-ultisnips')
+    endif
+
+    for plug in g:cmp_plugins
+        if plug == 'cmp-nvim-ultisnips'
+            Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'on': []}
+        else
+            Plug 'hrsh7th/'..plug, {'on': []}
+        endif
+    endfor
 endif
 
 " --others-- "

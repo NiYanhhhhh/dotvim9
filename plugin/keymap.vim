@@ -33,6 +33,10 @@ nnoremap <C-S-CR> O<Esc>j
 
 nnoremap <c-l> <cmd>nohlsearch<cr>
 
+" --using buffer instead of tab-- "
+nnoremap gt <cmd>bn<cr>
+nnoremap gT <cmd>bN<cr>
+
 " --using function-- "
 inoremap <expr> <c-j> keymap#nextline(0)
 imap <expr> <tab> pumvisible() ? "\<C-n>" :

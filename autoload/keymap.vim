@@ -5,14 +5,23 @@ function! keymap#nextline(arg) abort
     if index(semi_ft_list, &filetype) > -1
         let append_sem = 1
         let line = getline('.')
-        if line == ''
+        if match(line, '^\s*$') > -1
             let append_sem = 0
         endif
         let last_char = strpart(line, strlen(line) - 1)
-        if &filetype == 'cpp'
-            if match(line, '\s*#include') > -1
-                let append_sem = 0
-            endif
+        if &filetype == 'cpp' || &filetype == 'c'
+            let precompile_keyword = [
+                        \ 'include',
+                        \ 'define',
+                        \ 'ifndef',
+                        \ 'ifdef',
+                        \ 'endif']
+            for kword in precompile_keyword
+                if match(line, '\s*#'..kword) > -1 || match(line, 'case\s\+''\=\w\+''\=') > -1
+                    let append_sem = 0
+                    break
+                endif
+            endfor
         endif
         if last_char != ';' && append_sem
             let cmd .= ';'
@@ -58,7 +67,10 @@ function! keymap#confirm() abort
                 return coc#pum#confirm()
             endif
         endif
-    else
+    elseif g:complete_frame == 'cmp'
+      if luaeval("require'cmp'.visible()")
+        return "\<cmd>lua require'cmp'.confirm()\<cr>"
+      endif
     endif
 
     if g:snips_frame == 'ultisnips'
@@ -163,11 +175,20 @@ function! keymap#insert_mappings() abort
 endfunction
 
 function! keymap#pumvisible() abort
+    let result = 0
     if g:complete_frame == 'coc'
-        return coc#pum#visible()
-    else
-        return pumvisible()
+        let result = coc#pum#visible()
     endif
+
+    if g:complete_frame == 'cmp'
+        let result = luaeval("require'cmp'.visible()")
+    endif
+    
+    if pumvisible()
+        let result = 1
+    endif
+
+    return result
 endfunction
 
 function! keymap#fern() abort
